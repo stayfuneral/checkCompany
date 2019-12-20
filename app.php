@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/app/crest.php';
 
 /*
- * GNU GENERAL PUBLIC LICENSE
+ * MIT License
  */
 
 $eventHandler = ($_SERVER['SERVER_PORT']==443||$_SERVER["HTTPS"]=="on"? 'https': 'http')."://".$_SERVER['SERVER_NAME'].(in_array($_SERVER['SERVER_PORT'], Array(80, 443))?'':':'.$_SERVER['SERVER_PORT']).$_SERVER['SCRIPT_NAME']; //адрес обработчика, возвращает текущую страницу
