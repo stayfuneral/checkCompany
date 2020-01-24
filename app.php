@@ -46,11 +46,15 @@ switch ($_REQUEST['event']) {
                         ]
                     ]
         ]);
+        $totalNewCompanies = $getNeedleCompanies['result']['result_total']['get_companies_on_new_status'];
+        $totalReturnCompanies = $getNeedleCompanies['result']['result_total']['get_companies_on_return_status'];
         
-        $total = $getNeedleCompanies['result']['result_total']['get_companies_on_new_status'] + $getNeedleCompanies['result']['result_total']['get_companies_on_return_status'];
+        $total = $totalNewCompanies + $totalReturnCompanies;
+        
         $managerID = $getNeedleCompanies['result']['result']['get_company']['ASSIGNED_BY_ID'];
         $managerName = $getNeedleCompanies['result']['result']['get_assigned'][0]['NAME'] . ' ' . $getNeedleCompanies['result']['result']['get_assigned'][0]['LAST_NAME'];
         $companyTitle = $getNeedleCompanies['result']['result']['get_company']['TITLE'];
+        $ufCrmClientStatus = $getNeedleCompanies['result']['result']['get_company']['UF_CRM_CLIENT_STATUS'];
         
         /*
          * Проверка на выполнение условий (одновременно):
@@ -62,8 +66,8 @@ switch ($_REQUEST['event']) {
          */
         if (
                 intval($managerID) !== intval($reservedUser) && 
-                ($total > $totalEnabledCompanies || $logData['new_companies_count'] > $totalEnabledCompanies || $logData['return_companies_count'] > $totalEnabledCompanies) && 
-                (intval($getNeedleCompanies['result']['result']['get_company']['UF_CRM_CLIENT_STATUS']) == $statusNewID || intval($getNeedleCompanies['result']['result']['get_company']['UF_CRM_CLIENT_STATUS']) == $statusReturnID)
+                ($total > $totalEnabledCompanies || $totalNewCompanies > $totalEnabledCompanies || $totalReturnCompanies > $totalEnabledCompanies) && 
+                (intval($ufCrmClientStatus) == $statusNewID || intval($ufCrmClientStatus) == $statusReturnID)
         ) {
             $action = CRest::callBatch([
                         'update_company' => [
