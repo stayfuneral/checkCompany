@@ -14,14 +14,14 @@ foreach($eventList as $event) {
 if(!in_array('ONCRMCOPMANYADD', $events)) {
 	CRest::call('event.bind', [
 		'event' => 'onCrmCompanyAdd'
-		'handler' => 'https://bx.kraska54.ru/events.php'
+		'handler' => 'https://domain/handler.php'
 	]);
 }
 
 if(!in_array('ONCRMCOMPANYUPDATE', $events)) {
 	CRest::call('event.bind', [
 		'event' => 'onCrmCompanyUpdate'
-		'handler' => 'https://bx.kraska54.ru/events.php'
+		'handler' => 'https://domain/handler.php'
 	]);
 }
 
